@@ -1,0 +1,256 @@
+<html class="light" lang="en"><head></head><body class="bg-background-light dark:bg-background-dark font-display text-[#181711] transition-colors duration-300">```html
+
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DevPortfolio - Creative Developer</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Dancing+Script:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#ecc813",
+              "background-light": "#fdfaf0",
+              "background-dark": "#181711",
+              "vibrant-yellow": "#FBDA8D",
+              "vibrant-green": "#C4DE9F",
+              "vibrant-blue": "#91D1F4",
+              "vibrant-pink": "#FFB8D1",
+              "custom-accent": "#E0ECC8",
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"],
+              "elegant": ["Dancing Script", "cursive"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            .material-symbols-outlined {
+                font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            }
+        }
+        .hero-gradient-vibrant {
+            background: linear-gradient(135deg, #FBDA8D 0%, #C4DE9F 50%, #91D1F4 100%);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes float-alt {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(15px) rotate(-3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes float-slow {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .floating-1 { animation: float 6s ease-in-out infinite; }
+        .floating-2 { animation: float-alt 8s ease-in-out infinite; }
+        .floating-3 { animation: float 7s ease-in-out infinite; animation-delay: 1s; }
+        .floating-4 { animation: float-slow 10s ease-in-out infinite; animation-delay: 0.5s; }
+    </style>
+
+
+<div class="relative min-h-screen flex flex-col">
+<header class="fixed top-0 left-0 right-0 z-50 bg-custom-accent/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-solid border-[#181711]/10 px-6 md:px-20 py-4 transition-colors duration-300">
+<div class="max-w-[1200px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-9 bg-vibrant-yellow rounded-lg flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-white font-bold">bolt</span>
+</div>
+<h2 class="text-[#181711] dark:text-white text-xl font-extrabold tracking-tight">AlexDev</h2>
+</div>
+<nav class="hidden md:flex items-center gap-10">
+<a class="text-[#181711] dark:text-white/80 text-sm font-semibold hover:text-vibrant-yellow transition-colors" href="#">Work</a>
+<a class="text-[#181711] dark:text-white/80 text-sm font-semibold hover:text-vibrant-yellow transition-colors" href="#">Skills</a>
+<a class="text-[#181711] dark:text-white/80 text-sm font-semibold hover:text-vibrant-yellow transition-colors" href="#">About</a>
+<a class="text-[#181711] dark:text-white/80 text-sm font-semibold hover:text-vibrant-yellow transition-colors" href="#">Contact</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-full h-10 px-6 bg-vibrant-yellow text-[#181711] text-sm font-bold shadow-lg shadow-vibrant-yellow/20 hover:scale-105 transition-transform active:scale-95">
+<span>Resume</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col pt-20">
+<section class="relative min-h-[70vh] flex flex-col justify-center w-full px-6 md:px-20 py-12 lg:py-20 overflow-hidden">
+<div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+<div class="flex flex-col gap-8 z-10">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-vibrant-yellow/20 text-[#c29d00] font-bold text-xs uppercase tracking-widest">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-vibrant-yellow opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-vibrant-yellow"></span>
+</span>
+                        Available for hire
+                    </div>
+<div class="flex flex-col gap-5">
+<h1 class="text-[#181711] dark:text-white text-5xl md:text-7xl font-black leading-[1.05] tracking-tight">
+                            Crafting <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#d9a406] to-[#7dbb34]">vibrant</span> code for the modern web.
+                        </h1>
+<p class="text-[#181711]/70 dark:text-white/60 text-lg md:text-xl font-medium leading-relaxed max-w-lg">
+                            I'm Alex, a frontend expert dedicated to building lively, interactive, and joyful digital products with a pastel-perfect touch.
+                        </p>
+</div>
+<div class="flex flex-wrap gap-4">
+<button class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-2xl h-14 px-8 bg-vibrant-yellow text-[#5c4a00] text-base font-bold shadow-xl shadow-vibrant-yellow/30 hover:-translate-y-1 transition-all">
+<span>View Projects</span>
+</button>
+<button class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-2xl h-14 px-8 bg-white dark:bg-white/5 border-2 border-vibrant-yellow/30 text-[#181711] dark:text-white text-base font-bold hover:bg-vibrant-yellow/10 transition-all">
+<span>Get in Touch</span>
+</button>
+</div>
+</div>
+<div class="relative h-[450px] lg:h-[550px] w-full flex items-center justify-center">
+<div class="absolute inset-0 hero-gradient-vibrant rounded-full blur-[100px] opacity-40 animate-pulse"></div>
+<div class="relative w-full h-full flex items-center justify-center">
+<div class="floating-1 absolute top-[5%] left-[5%] p-4 bg-white dark:bg-[#2a2718] rounded-2xl shadow-2xl border border-white/50 flex flex-col gap-3 w-44 z-30">
+<div class="w-full aspect-square rounded-xl bg-vibrant-yellow flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-4xl text-white">shopping_basket</span>
+</div>
+<div>
+<p class="text-[10px] font-extrabold text-[#c29d00] uppercase tracking-tighter">Retail App</p>
+<h4 class="text-sm font-bold dark:text-white">Lumina Shop</h4>
+</div>
+</div>
+<div class="floating-2 absolute bottom-[20%] right-[2%] p-4 bg-white dark:bg-[#2a2718] rounded-2xl shadow-2xl border border-white/50 flex flex-col gap-3 w-48 z-20">
+<div class="w-full aspect-square rounded-xl bg-vibrant-green flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-4xl text-white">insights</span>
+</div>
+<div>
+<p class="text-[10px] font-extrabold text-[#7dbb34] uppercase tracking-tighter">Analytics</p>
+<h4 class="text-sm font-bold dark:text-white">Growth Hub</h4>
+</div>
+</div>
+<div class="floating-3 absolute top-[30%] right-[10%] p-4 bg-white dark:bg-[#2a2718] rounded-2xl shadow-2xl border border-white/50 flex flex-col gap-3 w-44 z-40">
+<div class="w-full aspect-square rounded-xl bg-vibrant-blue flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-4xl text-white">layers</span>
+</div>
+<div>
+<p class="text-[10px] font-extrabold text-[#4a97c2] uppercase tracking-tighter">SaaS Tool</p>
+<h4 class="text-sm font-bold dark:text-white">LayerStack</h4>
+</div>
+</div>
+<div class="floating-4 absolute bottom-[10%] left-[15%] p-3 bg-white/80 dark:bg-white/10 backdrop-blur-md rounded-full shadow-lg border border-white/40">
+<span class="material-symbols-outlined text-vibrant-yellow text-3xl">brush</span>
+</div>
+<div class="floating-2 absolute top-[15%] right-[30%] size-12 bg-vibrant-pink/30 rounded-full blur-md"></div>
+<div class="floating-1 absolute bottom-[40%] right-[35%] p-3 bg-white/80 dark:bg-white/10 backdrop-blur-md rounded-xl shadow-lg border border-white/40">
+<span class="material-symbols-outlined text-vibrant-blue text-2xl">auto_fix_high</span>
+</div>
+</div>
+</div>
+</div>
+<div class="max-w-[1200px] mx-auto w-full mt-16 px-4">
+<div class="flex flex-col gap-6 py-8 border-t border-vibrant-yellow/20">
+<h3 class="text-xs font-black uppercase tracking-[0.2em] text-[#181711]/40 dark:text-white/30">Skills</h3>
+<div class="flex flex-wrap items-center gap-4">
+<div class="flex items-center px-6 py-2.5 bg-vibrant-green/10 rounded-xl border border-vibrant-green/20 group hover:bg-vibrant-green/20 transition-colors">
+<span class="text-sm font-bold text-[#7dbb34]">Spring Boot</span>
+</div>
+<div class="flex items-center px-6 py-2.5 bg-vibrant-blue/10 rounded-xl border border-vibrant-blue/20 group hover:bg-vibrant-blue/20 transition-colors">
+<span class="text-sm font-bold text-[#4a97c2]">Eclipse</span>
+</div>
+<div class="flex items-center px-6 py-2.5 bg-vibrant-pink/10 rounded-xl border border-vibrant-pink/20 group hover:bg-vibrant-pink/20 transition-colors">
+<span class="text-sm font-bold text-[#e06c94]">Figma</span>
+</div>
+<div class="flex items-center px-6 py-2.5 bg-vibrant-yellow/10 rounded-xl border border-vibrant-yellow/20 group hover:bg-vibrant-yellow/20 transition-colors">
+<span class="text-sm font-bold text-[#d9a406]">Notion</span>
+</div>
+<div class="flex items-center px-6 py-2.5 bg-[#181711]/5 dark:bg-white/5 rounded-xl border border-[#181711]/10 dark:border-white/10 group hover:bg-[#181711]/10 transition-colors">
+<span class="text-sm font-bold text-[#181711] dark:text-white">GitHub</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="px-6 md:px-20 py-24 bg-custom-accent dark:bg-background-dark/50 transition-colors duration-300">
+<div class="max-w-[1200px] mx-auto">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 px-4">
+<div class="max-w-xl">
+<h3 class="text-vibrant-blue font-black text-sm uppercase tracking-widest mb-4">Portfolio</h3>
+<h2 class="text-[#181711] dark:text-white text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">Recent Projects</h2>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-4">
+<div class="group relative overflow-hidden rounded-3xl aspect-[4/5] bg-cover bg-center shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 cursor-pointer" style='background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.9) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuD2sFsQv6w7ItjmKp8O4H67LOVJ_2b-VX-qaBsMfvFuFxEvtocwD84RXgP-TjY6Txi06pFtRgL6GCmSYF3tuSDuZPpBO0D3dv_HI7OzhCBzgGpJVq4VzicPL-RDYLjJjaSJcSLgDhYI7RH3GpeX9BQWpKEmNCaNEBS0bRiyTkRO1Tq2x3a-7vQnFpUunpOAHVxMST078AJt7Rn9ZQ4GbuSADJTaS3ivduEm0y65EKnY-b9g-QO4fp7phbLa-Pm6hWAhIv2OB5S90qI");'>
+<div class="absolute inset-0 bg-vibrant-yellow/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+<p class="text-vibrant-yellow text-xs font-black uppercase tracking-widest mb-2">Web Design</p>
+<h3 class="text-white text-2xl font-extrabold leading-tight">E-commerce Experience</h3>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-3xl aspect-[4/5] bg-cover bg-center shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 cursor-pointer" style='background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.9) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCQjCIamAH78IuqL1wXxGArDvJNdpoo7KxY4DrwE6ILD2FuhXlOMtAJTZoBK4d_ASezmiR8HmULvf79M6wfkPez8GqqidW5XdfsPC-GJY0WEj7RoC5VdDAyebIsDUdTfBb2Lf-bXfJN9syibGwNmVGLIANpmg67nnw2Df_scC3CKffcNLKBm9IBI7xE_45I4G4gEhdK9VlaEFwbNUQuCLRbw6Vu7OcrYyptpSnfByEBC6B7QRlSnmDgmnYQTd1DYV5sFmo-K0YofNE");'>
+<div class="absolute inset-0 bg-vibrant-green/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+<p class="text-vibrant-green text-xs font-black uppercase tracking-widest mb-2">Productivity</p>
+<h3 class="text-white text-2xl font-extrabold leading-tight">SaaS Dashboard</h3>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-3xl aspect-[4/5] bg-cover bg-center shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 cursor-pointer" style='background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.9) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAwuLqCm5DbmKPqqURj_e2g6pWJCUPpMljpBo3lIsjfXkKWXGn2w_BDTnQ4ai3viUPIxiZpO6RgpgwUQtZR0F7t0omLTofp7jqrkvwUFIfKcdmwNAcJW43qhyMGvOfqTyyJC9f4XTEW8BN24S2a6X6crWFNSYz_0Mo7_gDn8hSYtEapiqeglSnZ6jUq_UeCRv_0FFQZRca_NF8acCKVnJSwzvq2KAVaarzcXrSB5FQfOAV-mmFN6A0Ws2Rk8Ic1i5yPpwEWoUZ_r-0");'>
+<div class="absolute inset-0 bg-vibrant-blue/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+<p class="text-vibrant-blue text-xs font-black uppercase tracking-widest mb-2">Development</p>
+<h3 class="text-white text-2xl font-extrabold leading-tight">Creative Tooling</h3>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-vibrant-yellow/5 dark:bg-background-dark px-6 md:px-20 pt-16 pb-8 border-t border-vibrant-yellow/20">
+<div class="max-w-[1200px] mx-auto flex flex-col items-center">
+<div class="text-center mb-12">
+<h2 class="text-[#181711] dark:text-white text-4xl font-black tracking-tight mb-4">Let's build together.</h2>
+<p class="text-[#181711]/60 dark:text-white/50 text-base font-medium">Ready to start your next digital journey?</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-2xl mb-12">
+<a class="group flex items-center gap-5 p-6 bg-vibrant-yellow rounded-2xl shadow-xl shadow-vibrant-yellow/10 hover:-translate-y-1 transition-all" href="mailto:hello@alexdev.com">
+<div class="size-14 rounded-xl bg-white/40 flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-[#5c4a00] text-2xl">alternate_email</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-black uppercase tracking-[0.2em] text-[#5c4a00]/60">Email Me</span>
+<span class="text-sm font-bold text-[#5c4a00]">hello@alexdev.com</span>
+</div>
+</a>
+<a class="group flex items-center gap-5 p-6 bg-vibrant-blue rounded-2xl shadow-xl shadow-vibrant-blue/10 hover:-translate-y-1 transition-all" href="https://github.com/alexdev" target="_blank">
+<div class="size-14 rounded-xl bg-white/40 flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-[#1e4a63] text-2xl">hub</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-black uppercase tracking-[0.2em] text-[#1e4a63]/60">GitHub</span>
+<span class="text-sm font-bold text-[#1e4a63]">github.com/alexdev</span>
+</div>
+</a>
+</div>
+<div class="text-center mb-12 mt-8">
+<p class="text-[#d9a406] dark:text-vibrant-pink font-elegant text-3xl md:text-4xl drop-shadow-sm">
+                    Thanks for stopping by! Let’s create something amazing together.
+                </p>
+</div>
+<div class="w-full pt-8 border-t border-vibrant-yellow/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-black text-[#181711]/40 uppercase tracking-[0.2em]">
+<p>© 2024 AlexDev Portfolio. Built with Joy.</p>
+<div class="flex gap-8">
+<a class="hover:text-vibrant-yellow transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-vibrant-yellow transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+
+```</body></html>
