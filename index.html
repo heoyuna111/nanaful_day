@@ -265,6 +265,195 @@
     allProjects.forEach(card => {
         projectObserver.observe(card);
     });
+
+    // 드래그로 카드 옮기기
+    document.querySelectorAll('.project-card').forEach(card => projectObserver.observe(card));
+
+    // 3. ✨ 드래그 앤 드롭 (수정된 최종 버전)
+    document.querySelectorAll('.floating-card').forEach(card => {
+        let isDragging = false;
+        let startX = 0, startY = 0; 
+        let moveX = 0, moveY = 0;   
+        let lastX = 0, lastY = 0;   
+        let isMoved = false;
+
+        card.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            
+            isDragging = true;
+            isMoved = false;
+            this.classList.add('is-dragging');
+
+            // 드래그 중 방해 요소 제거
+            this.style.animation = 'none';
+            // 핵심: 드래그하는 동안엔 transition을 0으로 만들어 마우스를 즉각 따라오게 함
+            this.style.transition = 'none'; 
+            
+            startX = e.clientX;
+            startY = e.clientY;
+
+            const onMouseMove = (e) => {
+                if (!isDragging) return;
+                isMoved = true;
+
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+
+                moveX = lastX + dx;
+                moveY = lastY + dy;
+
+                requestAnimationFrame(() => {
+                    if (!isDragging) return;
+                    // 핵심: CSS 변수에 좌표를 저장해야 애니메이션이 이 위치를 기준으로 작동함
+                    this.style.setProperty('--tx', `${moveX}px`);
+                    this.style.setProperty('--ty', `${moveY}px`);
+                    this.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) scale(1.05)`;
+                });
+            };
+
+            // 스크립트의 onMouseUp 부분을 이렇게 확인하세요
+            const onMouseUp = () => {
+                if (!isDragging) return;
+                isDragging = false;
+                card.classList.remove('is-dragging');
+                
+                // 핵심: 이동한 거리를 누적 좌표에 저장해야 '고정'됩니다.
+                lastX = moveX; 
+                lastY = moveY;
+
+                // 최종 위치를 translate3d로 확실히 고정
+                card.style.transform = `translate3d(${lastX}px, ${lastY}px, 0)`;
+                
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            };
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+
+        card.addEventListener('click', (e) => {
+            if (isMoved) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+    });
+
+    // 1. 움찔
+    function startRandomJiggle(card) {
+        const minTime = 3000; // 최소 3초 후
+        const maxTime = 7000; // 최대 7초 후
+
+        function jiggle() {
+            // 드래그 중이 아닐 때만 실행
+            if (!card.classList.contains('is-dragging')) {
+                card.classList.add('do-jiggle');
+                
+                // 애니메이션 지속 시간(0.5초) 뒤에 클래스 제거
+                setTimeout(() => {
+                    card.classList.remove('do-jiggle');
+                }, 500);
+            }
+
+            // 랜덤 시간 뒤에 다시 실행 (재귀)
+            const nextTime = Math.random() * (maxTime - minTime) + minTime;
+            setTimeout(jiggle, nextTime);
+        }
+
+        jiggle();
+    }
+
+    // [주기적 움찔 함수]
+    function startPeriodicSway(card) {
+        function scheduleNext() {
+            if (!card.classList.contains('is-dragging')) {
+                // 움찔 애니메이션 시작
+                card.classList.add('do-sway');
+                
+                // 애니메이션이 끝나면 클래스만 제거 (좌표는 그대로 유지됨)
+                setTimeout(() => {
+                    card.classList.remove('do-sway');
+                }, 800);
+            }
+            // 4~8초 랜덤 간격
+            setTimeout(scheduleNext, Math.random() * 4000 + 4000);
+        }
+        scheduleNext();
+    }
+
+    // [나비 안착 로직 내부]
+    // 5. 모든 애니메이션 종료 후 뒷정리
+    setTimeout(() => {
+        card.style.transition = 'none';
+        card.style.transform = '';
+        card.style.removeProperty('transform');
+
+        requestAnimationFrame(() => {
+            // ★ 여기서 주기적 움찔 함수를 실행!
+            startPeriodicSway(card);
+            
+            card.style.transition = 'box-shadow 0.2s ease, transform 0.4s ease';
+        });
+    }, 1200);
+
+    // 나비처럼 날아서 빙그르르 안착
+    window.addEventListener('load', () => {
+        const cards = document.querySelectorAll('.floating-card');
+        
+        cards.forEach((card, index) => {
+            // 1. 초기 위치 설정 (멀리서 날아오기 준비)
+            const dist = 2000;
+            const angle = Math.random() * Math.PI * 2;
+            const startX = Math.cos(angle) * dist;
+            const startY = Math.sin(angle) * dist;
+            const startRotate = Math.random() * 720 - 360;
+
+            card.style.opacity = '0';
+            card.style.transition = 'none';
+            card.style.setProperty('transform', `translate3d(${startX}px, ${startY}px, 0) rotate(${startRotate}deg)`, 'important');
+
+            // 2. 날아오기 시작
+            setTimeout(() => {
+                card.style.setProperty('transition', 'all 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 1s ease', 'important');
+                card.style.opacity = '1';
+                card.style.setProperty('transform', `translate3d(0, 0, 0) rotate(0deg) rotateY(1080deg)`, 'important');
+
+                // 나비 안착 로직 (setTimeout 1300ms 지점)
+            // 나비 안착 로직 (setTimeout 1300ms 지점) 내부 수정
+                setTimeout(() => {
+                    // 모든걸 지우지 말고, 드래그 좌표 시스템(--tx, --ty)으로 갈아탈 준비만 함
+                    card.style.transition = "none";
+                    card.style.setProperty('--tx', '0px');
+                    card.style.setProperty('--ty', '0px');
+                    
+                    void card.offsetWidth; 
+
+                    requestAnimationFrame(() => {
+                        card.style.transform = 'translate3d(var(--tx), var(--ty), 0)';
+                        card.classList.add('final-mode'); 
+                        startPeriodicSway(card);
+                        card.style.transition = 'box-shadow 0.2s ease, transform 0.1s ease';
+                    });
+                }, 1300);
+            }, index * 200 + 100);
+        });
+    });
+
+    // [중요] 함수 정의는 이벤트 리스너 바깥에 두는 게 깔끔해요!
+    function startPeriodicSway(card) {
+        function scheduleNext() {
+            if (!card.classList.contains('is-dragging')) {
+                card.classList.add('do-sway');
+                setTimeout(() => {
+                    card.classList.remove('do-sway');
+                }, 800);
+            }
+            // 4~8초 사이 랜덤하게 다음 움찔 예약
+            setTimeout(scheduleNext, Math.random() * 4000 + 4000);
+        }
+        scheduleNext();
+    }
 </script>
 
 

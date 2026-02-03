@@ -135,28 +135,34 @@ body {
 }
 
 .floating-card {
-  position: absolute;
-  padding: 1rem;
-  background: white;
-  border-radius: 1.5rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  width: 11rem;
-  z-index: 30;
-  text-decoration: none;
-  color: inherit;
+    position: absolute;
+    padding: 1rem;
+    background: white;
+    border-radius: 1.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 11rem;
+    z-index: 30;
+    text-decoration: none;
+    color: inherit;
+    
+    /* [수정 1] 드래그를 위해 transform 간섭 제거 */
+    touch-action: none;
+    cursor: grab;
+    /* transition에 transform이 있으면 드래그가 마우스를 못 따라오고 느려집니다 */
+    transition: box-shadow 0.2s ease, opacity 0.5s ease; 
 }
 .dark .floating-card { background: #2a2718; }
 .floating-card .img-box {
   aspect-ratio: 1/1; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center;
 }
 
-.floating-1 { animation: float 6s ease-in-out infinite; top: 5%; left: 5%; }
+/* .floating-1 { animation: float 6s ease-in-out infinite; top: 5%; left: 5%; }
 .floating-2 { animation: float-alt 8s ease-in-out infinite; bottom: -10%; right: 47%; }
-.floating-3 { animation: float 7s ease-in-out infinite; animation-delay: 1s; top: 30%; right: 10%; }
+.floating-3 { animation: float 7s ease-in-out infinite; animation-delay: 1s; top: 30%; right: 10%; } */
 
 /* --- 스킬 섹션 (수정 및 추가) --- */
 .skills-section { 
@@ -402,3 +408,88 @@ body {
     flex-wrap: wrap;
     position: relative;
 }
+/* 추가 */
+/* --- 플로팅 카드 일체 (최종 정리) --- */
+.hero-visual-area { 
+    position: relative; 
+    height: 450px; 
+    width: 100%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+@media (min-width: 1024px) { .hero-visual-area { height: 550px; } }
+
+.hero-bg-blur {
+    position: absolute; inset: 0; border-radius: 50%; opacity: 0.4;
+    background: linear-gradient(135deg, #FBDA8D 0%, #C4DE9F 50%, #91D1F4 100%);
+    filter: blur(100px); animation: pulse 2s infinite;
+}
+
+.floating-card {
+    position: absolute;
+    padding: 1rem;
+    background: white;
+    border-radius: 1.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 11rem;
+    z-index: 30;
+    text-decoration: none;
+    color: inherit;
+    
+    /* 드래그 설정 */
+    touch-action: none;
+    cursor: grab;
+    
+    /* [핵심] 클릭 시 사라짐 방지: transform은 JS가 실시간 제어하므로 transition에서 제외 */
+    transition: box-shadow 0.2s ease, opacity 0.5s ease; 
+}
+
+.dark .floating-card { background: #2a2718; }
+.floating-card .img-box {
+    aspect-ratio: 1/1; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center;
+}
+
+/* 1. 안착 완료(final-mode) 후에만 유나님의 애니메이션 실행 */
+.floating-1.final-mode { animation: float 6s ease-in-out infinite !important; }
+.floating-2.final-mode { animation: float-alt 8s ease-in-out infinite !important; } /* 짐픽은 아래로 */
+.floating-3.final-mode { animation: float-slow 7s ease-in-out infinite !important; }
+
+
+/* 3. 드래그 중에는 모든 애니메이션 강제 중단 */
+.floating-card.is-dragging {
+    animation: none !important;
+    transition: none !important; /* 마우스 즉각 반응 */
+    z-index: 1000 !important;
+    cursor: grabbing;
+}
+
+/* 초기 배치 위치 */
+.floating-1 { top: 5%; left: 5%; }
+.floating-2 { bottom: -10%; right: 47%; }
+.floating-3 { top: 30%; right: 10%; }
+
+@keyframes tilt-once {
+    0%, 100% { transform: translate3d(var(--tx, 0), var(--ty, 0), 0) rotate(0deg) scale(1); }
+    25% { transform: translate3d(var(--tx, 0), var(--ty, 0), 0) rotate(-7deg) scale(1.03); }
+    75% { transform: translate3d(var(--tx, 0), var(--ty, 0), 0) rotate(7deg) scale(1.03); }
+}
+
+/* JS에서 do-sway 클래스를 붙였을 때 실행 */
+.floating-card.do-sway {
+    animation: tilt-once 0.8s ease-in-out !important;
+}
+.floating-1.final-mode:not(.is-dragging):not(.do-sway) { animation: float 6s ease-in-out infinite; }
+.floating-2.final-mode:not(.is-dragging):not(.do-sway) { animation: float-alt 8s ease-in-out infinite; }
+.floating-3.final-mode:not(.is-dragging):not(.do-sway) { animation: float-slow 7s ease-in-out infinite; }
+
+@keyframes float {
+    0%, 100% { transform: translate3d(var(--tx, 0), var(--ty, 0), 0) translateY(0); }
+    50% { transform: translate3d(var(--tx, 0), var(--ty, 0), 0) translateY(-20px); }
+}
+
+
