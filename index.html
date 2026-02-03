@@ -399,45 +399,56 @@
 
     // 나비처럼 날아서 빙그르르 안착
     window.addEventListener('load', () => {
-        const cards = document.querySelectorAll('.floating-card');
-        
-        cards.forEach((card, index) => {
-            // 1. 초기 위치 설정 (멀리서 날아오기 준비)
-            const dist = 2000;
-            const angle = Math.random() * Math.PI * 2;
-            const startX = Math.cos(angle) * dist;
-            const startY = Math.sin(angle) * dist;
-            const startRotate = Math.random() * 720 - 360;
+        // [안전장치] 카드가 3개 다 생성될 때까지 체크하는 함수
+        function startAnimate() {
+            const cards = document.querySelectorAll('.floating-card');
+            
+            // 3개가 안 보이면 0.1초 뒤에 다시 확인
+            if (cards.length < 3) {
+                setTimeout(startAnimate, 100);
+                return;
+            }
 
-            card.style.opacity = '0';
-            card.style.transition = 'none';
-            card.style.setProperty('transform', `translate3d(${startX}px, ${startY}px, 0) rotate(${startRotate}deg)`, 'important');
+            // 3개 다 찾았으면 날아오기 시작!
+            cards.forEach((card, index) => {
+                const dist = 2000;
+                const angle = Math.random() * Math.PI * 2;
+                const startX = Math.cos(angle) * dist;
+                const startY = Math.sin(angle) * dist;
+                const startRotate = Math.random() * 720 - 360;
 
-            // 2. 날아오기 시작
-            setTimeout(() => {
-                card.style.setProperty('transition', 'all 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 1s ease', 'important');
-                card.style.opacity = '1';
-                card.style.setProperty('transform', `translate3d(0, 0, 0) rotate(0deg) rotateY(1080deg)`, 'important');
+                card.style.opacity = '0';
+                card.style.transition = 'none';
+                card.style.setProperty('transform', `translate3d(${startX}px, ${startY}px, 0) rotate(${startRotate}deg)`, 'important');
 
-                // 나비 안착 로직 (setTimeout 1300ms 지점)
-            // 나비 안착 로직 (setTimeout 1300ms 지점) 내부 수정
                 setTimeout(() => {
-                    // 모든걸 지우지 말고, 드래그 좌표 시스템(--tx, --ty)으로 갈아탈 준비만 함
-                    card.style.transition = "none";
-                    card.style.setProperty('--tx', '0px');
-                    card.style.setProperty('--ty', '0px');
-                    
-                    void card.offsetWidth; 
+                    card.style.setProperty('transition', 'all 1.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 1s ease', 'important');
+                    card.style.opacity = '1';
+                    card.style.setProperty('transform', `translate3d(0, 0, 0) rotate(0deg) rotateY(1080deg)`, 'important');
 
-                    requestAnimationFrame(() => {
-                        card.style.transform = 'translate3d(var(--tx), var(--ty), 0)';
-                        card.classList.add('final-mode'); 
-                        startPeriodicSway(card);
-                        card.style.transition = 'box-shadow 0.2s ease, transform 0.1s ease';
-                    });
-                }, 1300);
-            }, index * 200 + 100);
-        });
+                    setTimeout(() => {
+                        card.style.transition = "none";
+                        card.style.setProperty('--tx', '0px');
+                        card.style.setProperty('--ty', '0px');
+                        
+                        void card.offsetWidth; 
+
+                        requestAnimationFrame(() => {
+                            card.style.transform = 'translate3d(var(--tx), var(--ty), 0)';
+                            card.classList.add('final-mode'); 
+                            
+                            if (typeof startPeriodicSway === 'function') {
+                                startPeriodicSway(card);
+                            }
+                            
+                            card.style.transition = 'box-shadow 0.2s ease, transform 0.1s ease';
+                        });
+                    }, 1550); // 날아오는 시간보다 살짝 길게
+                }, index * 300 + 200); // 깃허브 페이지를 위해 순차적 발사 지연을 살짝 늘림
+            });
+        }
+
+        startAnimate(); // 실행!
     });
 
     // [중요] 함수 정의는 이벤트 리스너 바깥에 두는 게 깔끔해요!
