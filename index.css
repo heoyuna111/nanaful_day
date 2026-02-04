@@ -202,10 +202,21 @@ body {
 .skill-tag:hover {
     filter: brightness(0.95);
 }
+.skill-tag {
+    opacity: 0;
+    transform: scale(0) translateY(20px); /* 시작할 때 0에서 튀어나오게 */
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 튕기는 효과(Back) */
+}
+
+/* active 클래스가 붙을 때 뱉어내듯 나타남 */
+.skill-tag.active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
 
 /* --- 포트폴리오 섹션 (중요: max-height 제거) --- */
 .portfolio-section { 
-    padding: 4rem 1.5rem;
+    padding: 5rem 1.5rem;
     background-color: var(--custom-accent);
     transition: 0.3s;
     min-height: 70vh; /* max-height 대신 min-height 사용하여 영역 확장 허용 */
@@ -217,44 +228,56 @@ body {
 .project-grid { 
   display: grid; 
   grid-template-columns: 1fr; 
-  gap: 2rem; 
+  gap: 5.5rem; 
   width: 100%;
 }
 @media (min-width: 768px) { .project-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .project-grid { grid-template-columns: repeat(3, 1fr); } }
 
 .project-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 1.875rem;
-  aspect-ratio: 4/5;
-  background-size: cover;
-  background-position: center;
-  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-  transition: all 0.5s;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-}
+    position: relative;
+    background: white;
+    border-radius: 1.5rem;
+    padding: 1.5rem;  /*내부여백*/
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    height: 30rem;
 
-/* --- 프로젝트 카드 등장 애니메이션 설정 --- */
-.project-card {
+    aspect-ratio: auto;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+
     opacity: 0;
     transform: translateY(30px) scale(0.98);
     visibility: hidden;
-    will-change: transform, opacity;
-    
-    /* 나갈 때(사라질 때) 설정: 딜레이 없이 빠르게 사라짐 */
-    transition: all 0.3s ease-out; 
+    transition: all 0.4s ease-out;
+}
+/* --- [핵심] 호버 효과: 확대 + 나머지 흐려지기 --- */
+/* 1. 그리드 전체에 마우스 올리면 모든 카드 톤다운 */
+.project-grid:hover .project-card {
+    opacity: 0.4;
+    filter: grayscale(0.2) blur(1px); /* 살짝 채도 낮추고 흐리게 */
+    transform: scale(0.96);
 }
 
+/* 2. 마우스 올라간 카드만 주인공으로! */
+.project-grid .project-card:hover {
+    opacity: 1 !important;
+    filter: none !important;
+    background: white;
+    transform: translateY(-15px) scale(1.05) !important; /* 살짝 들리면서 확대 */
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.2); /* 그림자 더 강조 */
+    z-index: 10;
+}
 /* 등장했을 때 (JS가 클래스를 붙였을 때) */
 .project-card.reveal {
     opacity: 1;
     transform: translateY(0) scale(1);
     visibility: visible;
-    
-    /* 들어올 때 설정: 1초 동안 우아하게 */
     transition: opacity 1s ease, transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -265,25 +288,143 @@ body {
 
 /* 등장한 상태(reveal)에서만 마우스 호버 작동 */
 .project-card.reveal:hover {
-    transform: translateY(-12px) scale(1.02) !important;
-    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-    transition: all 0.3s ease; /* 호버 시에는 다시 빠른 반응속도로 */
+    opacity: 1 !important;
+    filter: none !important;
+    transform: translateY(-15px) scale(1.05) !important;
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    transition: all 0.3s ease; 
 }
-
 /* 카드 내부 콘텐츠 설정 */
 .card-content { 
     position: absolute; 
     bottom: 0; 
     left: 0; 
-    padding: 2rem; 
+    padding: 2.5rem; /* 여백을 조금 더 주어 시원하게 */
     width: 100%; 
-    transition: 0.3s; 
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
+
+/* 텍스트 스타일: 유나님의 색상 변수 활용 */
+.project-card .img-box {
+    width: 18rem;
+    height: 20rem;
+    flex-shrink: 0;
+    border-radius: 1rem; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-card .img-box span {
+    font-size: 4rem;       /* 아이콘 크기 시원하게 확대 */
+    color: white;
+}
+
+/* [중요] 카테고리와 타이틀이 absolute가 아니어야 순서대로 보입니다! */
+.project-card .project-category { 
+    position: relative;    /* absolute 해제 */
+    font-size: 1rem; 
+    font-weight: 800; 
+    text-transform: uppercase;
+    display: block;        /* 확실히 보이게 */
+}
+
+.project-card .project-title { 
+    position: relative;    /* absolute 해제 */
+    font-size: 1.8rem;     /* 0.875rem은 너무 작아요! 시원하게 키웁시다 */
+    font-weight: 900; 
+    margin: 0.5rem 0 0 0;
+    color: #444444;
+    display: block;        /* 확실히 보이게 */
+}
+
+
 /* --- 푸터 & 연락처 --- */
 .footer-main { padding: 4rem 1.5rem 2rem; background-color: rgba(251, 218, 141, 0.05); border-top: 1px solid rgba(251, 218, 141, 0.2); }
 .contact-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; width: 100%; max-width: 42rem; margin: 3rem auto; }
-@media (min-width: 640px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
+/* --- 반응형 밸런스 패치: 카드 크기와 그리드 조정 --- */
 
+@media (min-width: 640px) and (max-width: 850px) {
+    .project-grid {
+        /* 간격이 너무 넓으면 카드가 작아지므로 살짝 조정 */
+        gap: 3rem; 
+        /* 768px 이전이라도 화면이 커지면 미리 2줄로 바꿔서 뚱뚱함을 방지 */
+        grid-template-columns: repeat(2, 1fr); 
+    }
+
+    .project-card {
+        /* 카드가 옆으로 나란히 놓일 때 높이가 너무 높으면 답답하므로 살짝 줄임 */
+        height: 28rem; 
+        padding: 1.25rem;
+    }
+
+    .project-card .img-box {
+        /* [중요] 박스가 카드를 뚫고 나가지 않게 가로를 100%로 유연하게 변경 */
+        width: 100%; 
+        height: 15rem; /* 세로도 비율에 맞춰 살짝 축소 */
+    }
+
+    .project-card .project-title {
+        font-size: 1.5rem; /* 제목 크기도 적당히 조절 */
+    }
+}
+
+/* 추가: 아주 작은 모바일(400px 이하)에서 박스가 깨지는 것 방지 */
+@media (max-width: 480px) {
+    .project-card .img-box {
+        width: 100%;
+        height: 14rem;
+    }
+    .project-card {
+        height: auto; /* 모바일은 내용물에 맞게 늘어나도록 */
+        min-height: 25rem;
+    }
+}
+/* --- 모바일 및 500px 구간 집중 최적화 --- */
+@media (max-width: 767px) {
+    .project-grid {
+        gap: 3rem; /* 모바일에서 카드 사이 간격을 줄여 시각적 피로도 감소 */
+    }
+
+    .project-card {
+        /* [핵심] 500px대에서 막대기처럼 안 보이게 고정 높이 해제 */
+        height: auto; 
+        min-height: auto; 
+        padding: 1.5rem;
+        gap: 1.25rem; /* 요소 간 간격 살짝 넓힘 */
+    }
+
+    .project-card .img-box {
+        /* [핵심] 고정 너비(18rem)를 지우고 카드의 가로 폭에 맞춤 */
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 10; /* 박스가 너무 길지 않게 황금비율 적용 */
+    }
+
+    .project-card .img-box span {
+        font-size: 3.5rem; /* 아이콘 크기 살짝 조정 */
+    }
+
+    .project-card .project-title {
+        font-size: 1.6rem; /* 모바일 화면에 맞는 적당한 타이틀 크기 */
+        line-height: 1.2;
+    }
+
+    .project-card .project-category {
+        font-size: 0.85rem;
+    }
+}
+
+/* 500px 근처에서 좀 더 디테일하게 잡고 싶다면 */
+@media (min-width: 500px) and (max-width: 639px) {
+    .project-card {
+        max-width: 450px; /* 카드가 너무 넓어지는 것 방지 */
+        margin: 0 auto;   /* 중앙 정렬 */
+    }
+}
 .contact-item {
   display: flex; align-items: center; gap: 1.25rem; padding: 1.5rem; border-radius: 1.5rem;
   text-decoration: none; transition: 0.3s; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05);
@@ -337,7 +478,10 @@ body {
 /* 섹션 타이틀 및 텍스트 */
 .section-subtitle-small { font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; opacity: 0.4; }
 .portfolio-subtitle { color: var(--vibrant-blue); font-weight: 900; letter-spacing: 0.1em; font-size: 0.875rem; margin-bottom: 1rem; }
-.section-title { font-size: 3rem; font-weight: 800; margin-bottom: 3rem; }
+.section-title { 
+  font-size: 3rem; 
+  font-weight: 800; 
+  margin-bottom: 3.5rem; }
 
 /* 스킬 태그 컬러링 */
 .skill-spring { background: rgba(196, 222, 159, 0.2); color: #7dbb34; }
@@ -477,9 +621,9 @@ body {
 }
 
 /* 초기 배치 위치 */
-.floating-1 { top: 5%; left: 5%; }
-.floating-2 { bottom: -10%; right: 47%; }
-.floating-3 { top: 30%; right: 10%; }
+.floating-1 { top: 5%; right: 5%; }
+.floating-2 { bottom: -18%; right: 32%; }
+.floating-3 { top: 8%; left: -65%; }
 
 @keyframes tilt-once {
     0% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) rotate(0deg); }
