@@ -1,4 +1,6 @@
-/* --- 설정 및 변수 --- */
+/* ==========================================
+   1. 설정 및 변수 (Variables)
+   ========================================== */
 :root {
   --primary: #ecc813;
   --background-light: #fdfaf0;
@@ -11,638 +13,166 @@
   --text-main: #181711;
 }
 
-/* 기본 초기화 */
+/* ==========================================
+   2. 기본 초기화 & 레이아웃
+   ========================================== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* 원페이지 스크롤 방지 */
+}
+
 body {
-  background-color: var(--background-light);
   font-family: 'Plus Jakarta Sans', sans-serif;
   color: var(--text-main);
-  transition: background-color 0.3s, color 0.3s;
-  overflow-x: hidden;
-}
-.dark body { background-color: var(--background-dark); color: #ffffff; }
-
-/* 애니메이션 */
-
-/* 1번 카드 (위아래) */
-@keyframes float {
-    0%, 100% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) translateY(0); }
-    50% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) translateY(-15px); }
+  background-color: var(--background-light);
+  background-image: url('assets/images/back.png'); /* 👈 배경 이미지 완벽 복구 */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
-/* 2번 카드 (약간 대각선) */
-@keyframes float-alt {
-    0%, 100% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) translate(0, 0); }
-    50% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) translate(10px, 15px); }
+.page-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* 3번 카드 (좌우로 살랑) */
-@keyframes float-slow {
-    0%, 100% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) translateX(0); }
-    50% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) translateX(15px); }
+/* ==========================================
+   3. 배경 데코 레이어 (Bird, Cat) - 유나님 2560px 수치
+   ========================================== */
+.bg-deco-left {
+  position: fixed;
+  z-index: 1;
+  top: 18%; 
+  right: 31%;
+  width: 400px;  
+  height: 400px;
+  background-image: url('assets/images/bluebird.png');
+  background-repeat: no-repeat;
+  background-size: contain; 
+  background-position: center;
+  pointer-events: none;
 }
 
-@keyframes ping {
-  75%, 100% { transform: scale(2); opacity: 0; }
+.bg-deco-right {
+  position: fixed;
+  z-index: -1;
+  top: 9%; right: 5%;
+  width: 600px; 
+  height: 550px;
+  background-image: url('assets/images/window_cat.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  filter: drop-shadow(0 25px 15px rgba(0, 0, 0, 0.15));
 }
-@keyframes pulse {
-  50% { opacity: 0.4; }
-}
 
-/* --- 공용 레이아웃 --- */
-.container-wide { max-width: 1200px; margin: 0 auto; width: 100%; }
-.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-
-/* --- 헤더 --- */
-.main-header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-  background-color: rgba(224, 236, 200, 0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(24, 23, 17, 0.1);
-  padding: 1rem 1.5rem;
-}
-.dark .main-header { background-color: rgba(24, 23, 17, 0.95); }
-@media (min-width: 768px) { .main-header { padding: 1rem 5rem; } }
-
-.header-inner { display: flex; align-items: center; justify-content: space-between; }
-.nav-menu { display: none; align-items: center; gap: 2.5rem; }
-@media (min-width: 768px) { .nav-menu { display: flex; } }
-
-.nav-link {
-  text-decoration: none; font-size: 0.875rem; font-weight: 600;
-  color: inherit; transition: color 0.3s;
-}
-.nav-link:hover { color: var(--vibrant-yellow); }
-
-.btn-resume {
-  background-color: var(--vibrant-yellow); 
-  border: none; 
-  cursor: pointer;
-  padding: 0 1.5rem; 
-  height: 2.5rem; 
-  border-radius: 9999px;
-  font-weight: 700; 
-  box-shadow: 0 10px 15px -3px rgba(251, 218, 141, 0.2);
-  transition: transform 0.2s;
-  display: flex; 
-  align-items: center; 
-  justify-content: center;
-  text-decoration: none;
-  text-decoration: none;
-  color: inherit;
-}
-.btn-resume:hover { transform: scale(1.05); }
-
-/* --- 히어로 섹션 --- */
+/* ==========================================
+   4. 히어로 섹션 & 텍스트 & 버튼
+   ========================================== */
 .hero-wrapper {
-  padding-top: 5rem;
-  min-height: 80vh; /* 화면 꽉 차게 설정 */
+  flex: 1;
   display: flex;
   align-items: center;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding: 0 5rem;
   position: relative;
 }
-@media (min-width: 768px) { .hero-wrapper { padding-left: 5rem; padding-right: 5rem; } }
 
 .hero-grid {
-  display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  width: 100%;
+  max-width: 2560px; /* 👈 와이드 대응 */
+  margin: 0 auto;
 }
-@media (min-width: 1024px) { .hero-grid { grid-template-columns: 1fr 1fr; } }
 
+/* 뱃지 & 버튼 (유나님 원본 디자인용) */
 .hire-badge {
-  display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.375rem 1rem;
-  border-radius: 9999px; background-color: rgba(251, 218, 141, 0.2);
-  color: #c29d00; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 1rem; background: white; border-radius: 99px;
+  font-weight: 700; font-size: 0.875rem; color: #7dbb34;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 1.25rem;
 }
-.badge-ping-box { position: relative; display: flex; height: 0.5rem; width: 0.5rem; }
-.badge-ping { 
-  position: absolute; height: 100%; width: 100%; border-radius: 50%;
-  background-color: var(--vibrant-yellow); opacity: 0.75; animation: ping 1s infinite;
+.badge-ping-box { position: relative; width: 8px; height: 8px; }
+.badge-ping { position: absolute; width: 100%; height: 100%; background: #7dbb34; border-radius: 50%; animation: ping 1.5s infinite; }
+.badge-dot { position: relative; display: block; width: 8px; height: 8px; background: #7dbb34; border-radius: 50%; }
+
+.btn-resume {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0 2rem; height: 3.5rem; border-radius: 1rem;
+  font-weight: 700; text-decoration: none; transition: 0.3s;
+  cursor: pointer; border: none;
 }
-.badge-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background-color: var(--vibrant-yellow); position: relative; }
+.btn-hero-primary { background: var(--vibrant-yellow); color: #5c4a00; }
+.btn-hero-secondary { background: white; border: 2px solid var(--custom-accent); color: var(--text-main); margin-left: 1rem; }
+.btn-skills-magic { background: white; border: 2px solid #FBDA8D; margin-left: 1rem; animation: colorPulse 2s infinite; }
 
-.hero-title { 
-  font-size: 3.125rem; 
-  font-weight: 900; 
-  line-height: 1.05; 
-  letter-spacing: -0.02em; 
-  margin: 1.25rem 0; }
-@media (min-width: 768px) { .hero-title { font-size: 3.5rem; } }
-.gradient-text { background: linear-gradient(to right, #d9a406, #7dbb34);-webkit-background-clip: text; color: transparent; }
+.hero-title { font-size: 3.5rem; font-weight: 900; line-height: 1.05; margin: 1.25rem 0; }
+.gradient-text { background: linear-gradient(to right, #d9a406, #7dbb34); -webkit-background-clip: text; color: transparent; }
+.hero-desc { font-size: 1.25rem; opacity: 0.7; margin-bottom: 2rem; max-width: 32rem; }
 
-/* --- 플로팅 카드 일체 --- */
-.hero-visual-area { position: relative; height: 450px; width: 100%; display: flex; align-items: center; justify-content: center; }
-@media (min-width: 1024px) { .hero-visual-area { height: 550px; } }
-
-.hero-bg-blur {
-  position: absolute; inset: 0; border-radius: 50%; opacity: 0.4;
-  background: linear-gradient(135deg, #FBDA8D 0%, #C4DE9F 50%, #91D1F4 100%);
-  filter: blur(100px); animation: pulse 2s infinite;
+/* ==========================================
+   5. 플로팅 이미지 카드 (JS 연동)
+   ========================================== */
+.hero-visual-area {
+  position: relative; height: 550px; width: 100%;
+  display: flex; align-items: center; justify-content: center;
+  perspective: 2000px;
 }
 
 .floating-card {
-    position: absolute;
-    padding: 1rem;
-    background: white;
-    border-radius: 1.5rem;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    width: 11rem;
-    z-index: 30;
-    text-decoration: none;
-    color: inherit;
-    
-    /* [수정 1] 드래그를 위해 transform 간섭 제거 */
-    touch-action: none;
-    cursor: grab;
-    /* transition에 transform이 있으면 드래그가 마우스를 못 따라오고 느려집니다 */
-    transition: box-shadow 0.2s ease, opacity 0.5s ease; 
-}
-.dark .floating-card { background: #2a2718; }
-.floating-card .img-box {
-  aspect-ratio: 1/1; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center;
+  position: absolute; width: 13rem; height: auto;
+  background: transparent; border: none; box-shadow: none;
+  overflow: visible; z-index: 30; touch-action: none; cursor: grab;
+  transition: transform 0.2s ease, opacity 0.5s ease;
 }
 
-/* .floating-1 { animation: float 6s ease-in-out infinite; top: 5%; left: 5%; }
-.floating-2 { animation: float-alt 8s ease-in-out infinite; bottom: -10%; right: 47%; }
-.floating-3 { animation: float 7s ease-in-out infinite; animation-delay: 1s; top: 30%; right: 10%; } */
+.card-img { width: 100%; height: auto; display: block; pointer-events: none; }
 
-/* --- 스킬 섹션 (수정 및 추가) --- */
-.skills-section { 
-  padding: 4rem 1.5rem; 
-  border-top: 1px solid rgba(251, 218, 141, 0.2); 
-}
-.skill-list { 
-  display: flex; 
-  flex-wrap: wrap; 
-  gap: 1rem; 
-  margin-top: 1.5rem; 
-}
+.floating-1 { top: 5%; right: 5%; }
+.floating-2 { bottom: -10%; right: 30%; }
+.floating-3 { top: 10%; left: -10%; }
+
+/* ==========================================
+   6. 스킬 섹션 & [복구] 모든 컬러
+   ========================================== */
+.skills-section { padding: 3rem 0; }
+.skill-list { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
 .skill-tag {
-    /* 디자인 */
-    padding: 0.625rem 1.5rem; 
-    border-radius: 0.75rem; 
-    font-weight: 700; 
-    font-size: 0.875rem; 
-    cursor: default;
-
-    /* 애니메이션 준비 */
-    opacity: 0;
-    display: inline-block;
-    pointer-events: none;
-    
-    /* [절대 금지] 여기 transition이 있으면 안 됩니다! */
+  padding: 0.625rem 1.5rem; border-radius: 0.75rem; font-weight: 700;
+  opacity: 0; transform: translateY(20px); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+.skill-tag.active { opacity: 1; transform: translateY(0); }
 
-/* 호버는 일단 안전하게 이것만 */
-.skill-tag:hover {
-    filter: brightness(0.95);
-}
-.skill-tag {
-    opacity: 0;
-    transform: scale(0) translateY(20px); /* 시작할 때 0에서 튀어나오게 */
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 튕기는 효과(Back) */
-}
-
-/* active 클래스가 붙을 때 뱉어내듯 나타남 */
-.skill-tag.active {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-}
-
-/* --- 포트폴리오 섹션 (중요: max-height 제거) --- */
-.portfolio-section { 
-    padding: 5rem 1.5rem;
-    background-color: var(--custom-accent);
-    transition: 0.3s;
-    min-height: 70vh; /* max-height 대신 min-height 사용하여 영역 확장 허용 */
-    display: flex;
-    align-items: center;
- }
-.dark .portfolio-section { background-color: rgba(24, 23, 17, 0.5); }
-
-.project-grid { 
-  display: grid; 
-  grid-template-columns: 1fr; 
-  gap: 5.5rem; 
-  width: 100%;
-}
-@media (min-width: 768px) { .project-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1024px) { .project-grid { grid-template-columns: repeat(3, 1fr); } }
-
-.project-card {
-    position: relative;
-    background: white;
-    border-radius: 1.5rem;
-    padding: 1.5rem;  /*내부여백*/
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    width: 100%;
-    height: 30rem;
-
-    aspect-ratio: auto;
-    text-decoration: none;
-    color: inherit;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-
-    opacity: 0;
-    transform: translateY(30px) scale(0.98);
-    visibility: hidden;
-    transition: all 0.4s ease-out;
-}
-/* --- [핵심] 호버 효과: 확대 + 나머지 흐려지기 --- */
-/* 1. 그리드 전체에 마우스 올리면 모든 카드 톤다운 */
-.project-grid:hover .project-card {
-    opacity: 0.4;
-    filter: grayscale(0.2) blur(1px); /* 살짝 채도 낮추고 흐리게 */
-    transform: scale(0.96);
-}
-
-/* 2. 마우스 올라간 카드만 주인공으로! */
-.project-grid .project-card:hover {
-    opacity: 1 !important;
-    filter: none !important;
-    background: white;
-    transform: translateY(-15px) scale(1.05) !important; /* 살짝 들리면서 확대 */
-    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.2); /* 그림자 더 강조 */
-    z-index: 10;
-}
-/* 등장했을 때 (JS가 클래스를 붙였을 때) */
-.project-card.reveal {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    visibility: visible;
-    transition: opacity 1s ease, transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-/* 등장할 때만 시간차(Delay) 적용 */
-.project-card.reveal.project-1 { transition-delay: 0.1s; }
-.project-card.reveal.project-2 { transition-delay: 0.3s; }
-.project-card.reveal.project-3 { transition-delay: 0.5s; }
-
-/* 등장한 상태(reveal)에서만 마우스 호버 작동 */
-.project-card.reveal:hover {
-    opacity: 1 !important;
-    filter: none !important;
-    transform: translateY(-15px) scale(1.05) !important;
-    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.2);
-    z-index: 10;
-    transition: all 0.3s ease; 
-}
-/* 카드 내부 콘텐츠 설정 */
-.card-content { 
-    position: absolute; 
-    bottom: 0; 
-    left: 0; 
-    padding: 2.5rem; /* 여백을 조금 더 주어 시원하게 */
-    width: 100%; 
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-/* 텍스트 스타일: 유나님의 색상 변수 활용 */
-.project-card .img-box {
-    width: 18rem;
-    height: 20rem;
-    flex-shrink: 0;
-    border-radius: 1rem; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.project-card .img-box span {
-    font-size: 4rem;       /* 아이콘 크기 시원하게 확대 */
-    color: white;
-}
-
-/* [중요] 카테고리와 타이틀이 absolute가 아니어야 순서대로 보입니다! */
-.project-card .project-category { 
-    position: relative;    /* absolute 해제 */
-    font-size: 1rem; 
-    font-weight: 800; 
-    text-transform: uppercase;
-    display: block;        /* 확실히 보이게 */
-}
-
-.project-card .project-title { 
-    position: relative;    /* absolute 해제 */
-    font-size: 1.8rem;     /* 0.875rem은 너무 작아요! 시원하게 키웁시다 */
-    font-weight: 900; 
-    margin: 0.5rem 0 0 0;
-    color: #444444;
-    display: block;        /* 확실히 보이게 */
-}
-
-
-/* --- 푸터 & 연락처 --- */
-.footer-main { padding: 4rem 1.5rem 2rem; background-color: rgba(251, 218, 141, 0.05); border-top: 1px solid rgba(251, 218, 141, 0.2); }
-.contact-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; width: 100%; max-width: 42rem; margin: 3rem auto; }
-/* --- 반응형 밸런스 패치: 카드 크기와 그리드 조정 --- */
-
-@media (min-width: 640px) and (max-width: 850px) {
-    .project-grid {
-        /* 간격이 너무 넓으면 카드가 작아지므로 살짝 조정 */
-        gap: 3rem; 
-        /* 768px 이전이라도 화면이 커지면 미리 2줄로 바꿔서 뚱뚱함을 방지 */
-        grid-template-columns: repeat(2, 1fr); 
-    }
-
-    .project-card {
-        /* 카드가 옆으로 나란히 놓일 때 높이가 너무 높으면 답답하므로 살짝 줄임 */
-        height: 28rem; 
-        padding: 1.25rem;
-    }
-
-    .project-card .img-box {
-        /* [중요] 박스가 카드를 뚫고 나가지 않게 가로를 100%로 유연하게 변경 */
-        width: 100%; 
-        height: 15rem; /* 세로도 비율에 맞춰 살짝 축소 */
-    }
-
-    .project-card .project-title {
-        font-size: 1.5rem; /* 제목 크기도 적당히 조절 */
-    }
-}
-
-/* 추가: 아주 작은 모바일(400px 이하)에서 박스가 깨지는 것 방지 */
-@media (max-width: 480px) {
-    .project-card .img-box {
-        width: 100%;
-        height: 14rem;
-    }
-    .project-card {
-        height: auto; /* 모바일은 내용물에 맞게 늘어나도록 */
-        min-height: 25rem;
-    }
-}
-/* --- 모바일 및 500px 구간 집중 최적화 --- */
-@media (max-width: 767px) {
-    .project-grid {
-        gap: 3rem; /* 모바일에서 카드 사이 간격을 줄여 시각적 피로도 감소 */
-    }
-
-    .project-card {
-        /* [핵심] 500px대에서 막대기처럼 안 보이게 고정 높이 해제 */
-        height: auto; 
-        min-height: auto; 
-        padding: 1.5rem;
-        gap: 1.25rem; /* 요소 간 간격 살짝 넓힘 */
-    }
-
-    .project-card .img-box {
-        /* [핵심] 고정 너비(18rem)를 지우고 카드의 가로 폭에 맞춤 */
-        width: 100%;
-        height: auto;
-        aspect-ratio: 16 / 10; /* 박스가 너무 길지 않게 황금비율 적용 */
-    }
-
-    .project-card .img-box span {
-        font-size: 3.5rem; /* 아이콘 크기 살짝 조정 */
-    }
-
-    .project-card .project-title {
-        font-size: 1.6rem; /* 모바일 화면에 맞는 적당한 타이틀 크기 */
-        line-height: 1.2;
-    }
-
-    .project-card .project-category {
-        font-size: 0.85rem;
-    }
-}
-
-/* 500px 근처에서 좀 더 디테일하게 잡고 싶다면 */
-@media (min-width: 500px) and (max-width: 639px) {
-    .project-card {
-        max-width: 450px; /* 카드가 너무 넓어지는 것 방지 */
-        margin: 0 auto;   /* 중앙 정렬 */
-    }
-}
-.contact-item {
-  display: flex; align-items: center; gap: 1.25rem; padding: 1.5rem; border-radius: 1.5rem;
-  text-decoration: none; transition: 0.3s; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05);
-}
-.contact-item:hover { transform: translateY(-0.25rem); }
-.contact-item.email { background-color: var(--vibrant-yellow); color: #5c4a00; }
-.contact-item.github { background-color: var(--vibrant-blue); color: #1e4a63; }
-
-.contact-label { font-size: 10px; font-weight: 900; letter-spacing: 0.2em; opacity: 0.6; }
-.contact-value { 
-  font-size: 0.875rem; 
-  font-weight: 700; 
-  text-decoration: none;
-  color: inherit;
-
-}
-
-.icon-circle {
-  width: 3.5rem; height: 3.5rem; border-radius: 0.75rem; background-color: rgba(255, 255, 255, 0.4);
-  display: flex; align-items: center; justify-content: center; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-}
-
-
-/* --- 추가 분리 스타일 --- */
-
-/* 로고 및 헤더 유틸리티 */
-.logo-area { display: flex; align-items: center; gap: 0.75rem; }
-.logo-icon { width: 2.25rem; height: 2.25rem; background: var(--vibrant-yellow); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; }
-.logo-icon span { color: white; font-weight: bold; }
-.logo-text { font-size: 1.25rem; font-weight: 800; }
-
-/* 히어로 텍스트 유틸리티 */
-.hero-desc { font-size: 1.25rem; font-weight: 500; opacity: 0.7; max-width: 32rem; margin-bottom: 2rem; }
-.hero-btns { display: flex; flex-wrap: wrap; gap: 1rem; }
-.btn-hero-primary { height: 3.5rem; padding: 0 2rem; border-radius: 1rem; font-size: 1rem; }
-.btn-hero-secondary { height: 3.5rem; padding: 0 2rem; border-radius: 1rem; font-size: 1rem; background: white; border: 2px solid rgba(251, 218, 141, 0.3); color: var(--text-main); }
-
-/* 플로팅 카드 내부 스타일 */
-.card-label { font-size: 10px; font-weight: 800; margin-bottom: 2px; }
-.card-title { font-size: 0.875rem; font-weight: 700; }
-.img-box span { color: white; font-size: 2.5rem; }
-
-/* 카드 컬러 테마 */
-.img-box.retail { background: var(--vibrant-yellow); }
-.retail-text { color: #c29d00; }
-.img-box.analytics { background: var(--vibrant-green); }
-.analytics-text { color: #7dbb34; }
-.img-box.saas { background: var(--vibrant-blue); }
-.saas-text { color: #4a97c2; }
-
-/* 섹션 타이틀 및 텍스트 */
-.section-subtitle-small { font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; opacity: 0.4; }
-.portfolio-subtitle { color: var(--vibrant-blue); font-weight: 900; letter-spacing: 0.1em; font-size: 0.875rem; margin-bottom: 1rem; }
-.section-title { 
-  font-size: 3rem; 
-  font-weight: 800; 
-  margin-bottom: 3.5rem; }
-
-/* 스킬 태그 컬러링 */
+/* 스킬별 색상 완벽 복구 */
 .skill-spring { background: rgba(196, 222, 159, 0.2); color: #7dbb34; }
 .skill-django { background: rgba(157, 213, 179, 0.2); color: #3d9970; }
-.skill-react { background: rgba(143, 205, 226, 0.2); color: #3a9bbf; }
-.skill-js { background: rgba(245, 246, 123, 0.2); color: #d9c715; }
+.skill-react  { background: rgba(143, 205, 226, 0.2); color: #3a9bbf; }
+.skill-js     { background: rgba(245, 246, 123, 0.2); color: #d9c715; }
 .skill-python { background: rgba(190, 175, 214, 0.2); color: #8e5ea7; }
-.skill-java { background: rgba(245, 150, 123, 0.2); color: #e25c2d; }
-.skill-html { background: rgba(191, 225, 249, 0.2);  color: #ADD6F6; }
-.skill-mysql { background: rgba(145, 223, 215, 0.2); color: #31a5a1; }
-.skill-figma { background: rgba(255, 184, 209, 0.2); color: #e06c94; }
+.skill-java   { background: rgba(245, 150, 123, 0.2); color: #e25c2d; }
+.skill-html   { background: rgba(191, 225, 249, 0.2); color: #ADD6F6; }
+.skill-mysql  { background: rgba(145, 223, 215, 0.2); color: #31a5a1; }
+.skill-figma  { background: rgba(255, 184, 209, 0.2); color: #e06c94; }
 .skill-github { background: rgba(218, 99, 226, 0.2); color: #a266a9; }
 .skill-notion { background: rgba(249, 218, 141, 0.2); color: #d9a406; }
 .skill-oracle { background: rgba(140, 224, 192, 0.2); color: #6de990; }
 
-
-
-/* 프로젝트 카드 개별 배경 (필요시 교체) */
-.project-1 { background-image: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.8) 100%), url('assets/images/KODEHUN_main2.png'); }
-.project-2 { background-image: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.8) 100%), url('assets/images/Frame\ 22.png'); }
-.project-3 { background-image: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.8) 100%), url('https://picsum.photos/400/500?random=3'); }
-
-/* 프로젝트 텍스트 컬러 */
-.project-category { font-size: 0.75rem; font-weight: 900; letter-spacing: 0.1em; }
-.project-title { color: white; font-size: 1.5rem; font-weight: 800; }
-.yellow-text { color: var(--vibrant-yellow); }
-.green-text { color: var(--vibrant-green); }
-.blue-text { color: var(--vibrant-blue); }
-
-/* 푸터 유틸리티 */
-.footer-inner-content { text-align: center; }
-.footer-title { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.5rem; }
-.footer-desc { opacity: 0.6; font-weight: 500; }
-.footer-signature { font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #d9a406; margin-top: 2rem; }
-.contact-text { text-align: left; }
-
-
-/* 1. 버튼 색상 무한 반복 애니메이션 */
-@keyframes colorLoop {
-    0%, 100% { background-color: #FDF4BE; transform: scale(1); }
-    50% { background-color: #FFCE8D; transform: scale(1.03); }
-}
-/* 1. 버튼 디자인을 기존 버튼과 통일 */
-.btn-skills-magic {
-    /* 기존 btn-hero-secondary와 스타일 통일 */
-    height: 3.5rem;
-    padding: 0 2rem;
-    border-radius: 1rem;
-    font-size: 1rem;
-    background: white;
-    border: 2px solid rgba(251, 218, 141, 0.3);
-    color: var(--text-main);
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    
-    /* 강조를 위한 은은한 색상 반복만 유지 */
-    animation: colorPulse 2s infinite ease-in-out;
-}
-
-@keyframes colorPulse {
-    0%, 100% { border-color: rgba(251, 218, 141, 0.3); background-color: white; }
-    50% { border-color: #FFCE8D; background-color: #FDF4BE; }
-}
-
-/* 2. 스킬 섹션 레이아웃 */
-.skills-section {
-    margin-top: 3rem;
-    min-height: 100px; /* 공간 확보 */
-}
-
-.skill-list {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    position: relative;
-}
-/* 추가 */
-/* --- 플로팅 카드 일체 (최종 정리) --- */
-.hero-visual-area { 
-    position: relative; 
-    height: 450px; 
-    width: 100%; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-}
-@media (min-width: 1024px) { .hero-visual-area { height: 550px; } }
-
-.hero-bg-blur {
-    position: absolute; inset: 0; border-radius: 50%; opacity: 0.4;
-    background: linear-gradient(135deg, #FBDA8D 0%, #C4DE9F 50%, #91D1F4 100%);
-    filter: blur(100px); animation: pulse 2s infinite;
-}
-
-.floating-card {
-    position: absolute;
-    padding: 1rem;
-    background: white;
-    border-radius: 1.5rem;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    width: 11rem;
-    z-index: 30;
-    text-decoration: none;
-    color: inherit;
-    
-    /* 드래그 설정 */
-    touch-action: none;
-    cursor: grab;
-    
-    /* [핵심] 클릭 시 사라짐 방지: transform은 JS가 실시간 제어하므로 transition에서 제외 */
-    transition: box-shadow 0.2s ease, opacity 0.5s ease; 
-}
-
-.dark .floating-card { background: #2a2718; }
-.floating-card .img-box {
-    aspect-ratio: 1/1; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center;
-}
-
-/* 1. 안착 완료(final-mode) 후에만 유나님의 애니메이션 실행 */
-.floating-1.final-mode { animation: float 6s ease-in-out infinite !important; }
-.floating-2.final-mode { animation: float-alt 8s ease-in-out infinite !important; } /* 짐픽은 아래로 */
-.floating-3.final-mode { animation: float-slow 7s ease-in-out infinite !important; }
-
-
-/* 3. 드래그 중에는 모든 애니메이션 강제 중단 */
-.floating-card.is-dragging {
-    animation: none !important;
-    transition: none !important; /* 마우스 즉각 반응 */
-    z-index: 1000 !important;
-    cursor: grabbing;
-}
-
-/* 초기 배치 위치 */
-.floating-1 { top: 5%; right: 5%; }
-.floating-2 { bottom: -18%; right: 32%; }
-.floating-3 { top: 8%; left: -65%; }
-
-@keyframes tilt-once {
-    0% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) rotate(0deg); }
-    25% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) rotate(-7deg) scale(1.03); }
-    75% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) rotate(7deg) scale(1.03); }
-    100% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) rotate(0deg); }
-}
-
-/* JS에서 do-sway 클래스를 붙였을 때 실행 */
-.floating-card.do-sway {
-    animation: tilt-once 0.8s ease-in-out !important;
-}
-.floating-1.final-mode:not(.is-dragging):not(.do-sway) { animation: float 6s ease-in-out infinite; }
-.floating-2.final-mode:not(.is-dragging):not(.do-sway) { animation: float-alt 8s ease-in-out infinite; }
-.floating-3.final-mode:not(.is-dragging):not(.do-sway) { animation: float-slow 7s ease-in-out infinite; }
-
+/* ==========================================
+   7. 애니메이션 (Keyframes)
+   ========================================== */
 @keyframes float {
-    0%, 100% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) translateY(0); }
-    50% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) translateY(-20px); }
+  0%, 100% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) translateY(0); }
+  50% { transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) translateY(-20px); }
 }
+@keyframes ping { 75%, 100% { transform: scale(3); opacity: 0; } }
+@keyframes colorPulse { 0%, 100% { border-color: #FBDA8D; } 50% { border-color: #ecc813; background: #fffdf5; } }
 
-
+.floating-card.is-dragging { animation: none !important; z-index: 1000 !important; cursor: grabbing; }
