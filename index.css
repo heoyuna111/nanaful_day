@@ -43,15 +43,15 @@ body {
 }
 
 /* ==========================================
-   3. 배경 데코 레이어 (Bird, Cat) - 유나님 2560px 수치
+   3. 배경 데코 레이어 (Bird, Cat
    ========================================== */
 .bg-deco-left {
   position: fixed;
   z-index: 1;
-  top: 18%; 
-  right: 31%;
-  width: 400px;  
-  height: 400px;
+  top: 15%; 
+  right: 28%;
+  width: 300px;  
+  height: 350px;
   background-image: url('assets/images/bluebird.png');
   background-repeat: no-repeat;
   background-size: contain; 
@@ -63,8 +63,8 @@ body {
   position: fixed;
   z-index: -1;
   top: 9%; right: 5%;
-  width: 600px; 
-  height: 550px;
+  width: 500px; 
+  height: 450px;
   background-image: url('assets/images/window_cat.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -134,11 +134,11 @@ body {
   transition: transform 0.2s ease, opacity 0.5s ease;
 }
 
-.card-img { width: 100%; height: auto; display: block; pointer-events: none; }
+.card-img { width: 40%; height: auto; display: block; pointer-events: none; }
 
-.floating-1 { top: 5%; right: 5%; }
-.floating-2 { bottom: -10%; right: 30%; }
-.floating-3 { top: 10%; left: -10%; }
+.floating-1 { top: 72%; right: 34%; }
+.floating-2 { top: 67%; right: 25%; }
+.floating-3 { top: 62%; right: 16%; }
 
 /* ==========================================
    6. 스킬 섹션 & [복구] 모든 컬러
